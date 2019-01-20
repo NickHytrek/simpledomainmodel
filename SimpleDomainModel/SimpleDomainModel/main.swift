@@ -204,7 +204,7 @@ public struct Money {
     return Money(amount: newAmount, currency:from.currency)
     }
 }
-/*
+
 ////////////////////////////////////
 // Job
 //
@@ -218,15 +218,29 @@ open class Job {
   }
   
   public init(title : String, type : JobType) {
+    self.title = title
+    self.type = type
   }
   
   open func calculateIncome(_ hours: Int) -> Int {
+    switch type {
+    case .Hourly(let hourly):
+        return Int(hourly) * hours
+    case .Salary(let salary):
+        return salary
+    }
   }
   
   open func raise(_ amt : Double) {
+    switch type {
+    case .Hourly(var hourly):
+        hourly = hourly + amt
+    case .Salary(var salary):
+        salary = salary + Int(amt)
+    }
   }
 }
-
+/*
 ////////////////////////////////////
 // Person
 //
