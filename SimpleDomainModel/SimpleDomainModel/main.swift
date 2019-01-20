@@ -24,18 +24,187 @@ open class TestMe {
 // Money
 //
 public struct Money {
-  public var amount : Int
-  public var currency : String
+    public var amount : Int
+    public var currency : String {
+        didSet {
+            if currency != "USD" || currency != "GBP" || currency != "EUR" || currency != "CAN" {
+                currency = "USD"
+            }
+        }
+    }
   
   public func convert(_ to: String) -> Money {
+    var newAmount = 0
+    if (self.currency == "USD") {
+        if (to == "GBP") {
+            newAmount = self.amount / 2
+        }
+        else if (to == "EUR") {
+            newAmount = (self.amount * 3) / 2
+        }
+        else {
+            newAmount = (self.amount * 5) / 4
+        }
+    }
+    else if (self.currency == "GBP") {
+        if (to == "USD") {
+            newAmount = self.amount * 2
+        }
+        else if (to == "EUR") {
+            newAmount = self.amount * 3
+        }
+        else {
+            newAmount = (self.amount * 5) / 2
+        }
+    }
+    else if (self.currency == "EUR") {
+        if (to == "USD") {
+            newAmount = (self.amount * 2) / 3
+        }
+        else if (to == "GBP") {
+            newAmount = (self.amount / 3)
+        }
+        else {
+            newAmount = (self.amount * 5) / 6
+        }
+    }
+    else {
+        if (to == "USD") {
+            newAmount = (self.amount * 4) / 5
+        }
+        else if (to == "GBP") {
+            newAmount = (self.amount * 2) / 5
+        }
+        else {
+            newAmount = (self.amount * 6) / 5
+        }
+    }
+    let converted = Money(amount: newAmount, currency: to)
+    return converted
   }
   
   public func add(_ to: Money) -> Money {
+    var newAmount = 0
+    if (self.currency == "USD") {
+        if (to.currency == "USD") {
+            newAmount = self.amount + to.amount
+        }
+        else if (to.currency == "GBP") {
+            newAmount = (self.amount / 2) + to.amount
+        }
+        else if (to.currency == "EUR") {
+            newAmount = ((self.amount * 3) / 2) + to.amount
+        }
+        else {
+            newAmount = ((self.amount * 4) / 5) + to.amount
+        }
+    }
+    else if (self.currency == "GBP") {
+        if (to.currency == "USD") {
+            newAmount = (self.amount * 2) + to.amount
+        }
+        else if (to.currency == "GBP") {
+            newAmount = self.amount + to.amount
+        }
+        else if (to.currency == "EUR") {
+            newAmount = (self.amount * 3) + to.amount
+        }
+        else {
+            newAmount = ((self.amount * 5) / 2) + to.amount
+        }
+    }
+    else if (self.currency == "EUR") {
+        if (to.currency == "USD") {
+            newAmount = ((self.amount * 2) / 3) + to.amount
+        }
+        else if (to.currency == "GBP") {
+            newAmount = (self.amount / 3) + to.amount
+        }
+        else if (to.currency == "EUR") {
+            newAmount = self.amount + to.amount
+        }
+        else {
+            newAmount = ((self.amount * 5) / 6) + to.amount
+        }
+    }
+    else {
+        if (to.currency == "USD") {
+            newAmount = ((self.amount * 4) / 5) + to.amount
+        }
+        else if (to.currency == "GBP") {
+            newAmount = ((self.amount * 2) / 5) + to.amount
+        }
+        else if (to.currency == "EUR") {
+            newAmount = ((self.amount * 6) / 5) + to.amount
+        }
+        else {
+            newAmount = self.amount + to.amount
+        }
+    }
+    return Money(amount: newAmount, currency:to.currency)
   }
   public func subtract(_ from: Money) -> Money {
-  }
+    var newAmount = 0
+    if (self.currency == "USD") {
+        if (from.currency == "USD") {
+            newAmount = self.amount - from.amount
+        }
+        else if (from.currency == "GBP") {
+            newAmount = (self.amount / 2) - from.amount
+        }
+        else if (from.currency == "EUR") {
+            newAmount = ((self.amount * 3) / 2) - from.amount
+        }
+        else {
+            newAmount = ((self.amount * 4) / 5) - from.amount
+        }
+    }
+    else if (self.currency == "GBP") {
+        if (from.currency == "USD") {
+            newAmount = (self.amount * 2) - from.amount
+        }
+        else if (from.currency == "GBP") {
+            newAmount = self.amount - from.amount
+        }
+        else if (from.currency == "EUR") {
+            newAmount = (self.amount * 3) - from.amount
+        }
+        else {
+            newAmount = ((self.amount * 5) / 2) - from.amount
+        }
+    }
+    else if (self.currency == "EUR") {
+        if (from.currency == "USD") {
+            newAmount = ((self.amount * 2) / 3) - from.amount
+        }
+        else if (from.currency == "GBP") {
+            newAmount = (self.amount / 3) - from.amount
+        }
+        else if (from.currency == "EUR") {
+            newAmount = self.amount - from.amount
+        }
+        else {
+            newAmount = ((self.amount * 5) / 6) - from.amount
+        }
+    }
+    else {
+        if (from.currency == "USD") {
+            newAmount = ((self.amount * 4) / 5) - from.amount
+        }
+        else if (from.currency == "GBP") {
+            newAmount = ((self.amount * 2) / 5) - from.amount
+        }
+        else if (from.currency == "EUR") {
+            newAmount = ((self.amount * 6) / 5) - from.amount
+        }
+        else {
+            newAmount = self.amount - from.amount
+        }
+    }
+    return Money(amount: newAmount, currency:from.currency)
+    }
 }
-
+/*
 ////////////////////////////////////
 // Job
 //
@@ -105,7 +274,7 @@ open class Family {
   open func householdIncome() -> Int {
   }
 }
-
+*/
 
 
 
