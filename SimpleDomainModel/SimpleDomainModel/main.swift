@@ -237,10 +237,11 @@ open class Job {
         hourly = hourly + amt
     case .Salary(var salary):
         salary = salary + Int(amt)
+        
     }
   }
 }
-/*
+
 ////////////////////////////////////
 // Person
 //
@@ -251,16 +252,28 @@ open class Person {
 
   fileprivate var _job : Job? = nil
   open var job : Job? {
-    get { }
+    get {
+        if self.age < 16 {
+            return nil
+        }
+        return _job
+    }
     set(value) {
     }
+
   }
   
   fileprivate var _spouse : Person? = nil
   open var spouse : Person? {
-    get { }
+    get {
+        if self.age < 16 {
+            return nil
+        }
+        return _spouse
+    }
     set(value) {
     }
+
   }
   
   public init(firstName : String, lastName: String, age : Int) {
@@ -270,6 +283,7 @@ open class Person {
   }
   
   open func toString() -> String {
+    return "[Person: firstName:\(firstName) lastName:\(lastName) age:\(age) Salary:\(_job) spouse:\(_spouse)]"
   }
 }
 
@@ -280,15 +294,37 @@ open class Family {
   fileprivate var members : [Person] = []
   
   public init(spouse1: Person, spouse2: Person) {
+    if spouse1.spouse == nil && spouse2.spouse == nil {
+        members.append(spouse1)
+        members.append(spouse2)
+        spouse1.spouse = spouse2
+        spouse2.spouse = spouse1
+    }
   }
   
   open func haveChild(_ child: Person) -> Bool {
+    if members[0].age > 21 || members[1].age > 21 {
+        members.append(child)
+        return true
+    }
+    else {
+        return false
+    }
   }
   
   open func householdIncome() -> Int {
+    var i = 0
+    var totalIncome = 0
+    while i < members.count {
+        if members[i]._job != nil {
+            totalIncome = (members[i]._job?.calculateIncome(2000))!
+        }
+        i = i + 1
+    }
+    return totalIncome
   }
 }
-*/
+
 
 
 
