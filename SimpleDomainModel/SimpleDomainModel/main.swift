@@ -233,10 +233,12 @@ open class Job {
   
   open func raise(_ amt : Double) {
     switch type {
-    case .Hourly(var hourly):
-        hourly = hourly + amt
-    case .Salary(var salary):
-        salary = salary + Int(amt)
+    case .Hourly(let hourly):
+        let newHourly = hourly + amt
+        self.type = JobType.Hourly(newHourly)
+    case .Salary(let salary):
+        let newSalary = salary + Int(amt)
+        self.type = JobType.Salary(newSalary)
         
     }
   }
@@ -283,7 +285,8 @@ open class Person {
   }
   
   open func toString() -> String {
-    return "[Person: firstName:\(firstName) lastName:\(lastName) age:\(age) Salary:\(_job) spouse:\(_spouse)]"
+    let string = "[Person: firstName:\(firstName) lastName:\(lastName) age:\(age) job: \(_job) spouse:\(_spouse)]"
+    return string
   }
 }
 
